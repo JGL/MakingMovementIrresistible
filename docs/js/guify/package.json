@@ -1,0 +1,73 @@
+{
+  "//": "--------------- Script Info --------------- ",
+  "name": "guify",
+  "author": "Jonathan Cole <joncole04412@gmail.com>",
+  "version": "0.15.1",
+  "description": "A simple GUI for inspecting and changing JS variables",
+  "keywords": [
+    "gui",
+    "ui",
+    "inspect",
+    "inspector",
+    "bind",
+    "binding",
+    "project",
+    "creative coding",
+    "p5",
+    "three"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/colejd/guify.git"
+  },
+  "bugs": {
+    "url": "https://github.com/colejd/guify/issues"
+  },
+  "homepage": "https://github.com/colejd/guify#readme",
+  "license": "MIT",
+  "main": "lib/guify.min.js",
+  "scripts": {
+    "build:prod": "webpack --mode=production",
+    "build:dev": "webpack --mode=development --progress",
+    "buildall": "npm-run-all build:prod build:dev",
+    "build:dev:watch": "webpack --mode=development --progress --watch",
+    "serve": "webpack serve --mode=development",
+    "develop": "npm-run-all --parallel build:dev:watch serve",
+    "test": "mocha --require @babel/register --colors ./test/*.spec.js",
+    "prepublish": "npm run-script buildall",
+    "ci": "npm run-script buildall",
+    "lint": "eslint ."
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.16.0",
+    "@babel/core": "^7.16.0",
+    "@babel/eslint-parser": "^7.16.3",
+    "@babel/preset-env": "^7.16.0",
+    "@babel/register": "^7.16.0",
+    "babel-loader": "^8.2.3",
+    "chai": "^4.3.4",
+    "css-loader": "^6.5.1",
+    "eslint": "^8.2.0",
+    "eslint-webpack-plugin": "^3.1.0",
+    "mocha": "^9.1.3",
+    "npm-run-all": "^4.1.5",
+    "postcss": "^8.3.11",
+    "postcss-loader": "^6.2.0",
+    "postcss-preset-env": "^7.0.0",
+    "style-loader": "^3.3.1",
+    "webpack": "^5.63.0",
+    "webpack-cli": "^4.9.1",
+    "webpack-dev-server": "^4.4.0"
+  },
+  "dependencies": {
+    "dom-css": "^2.1.0",
+    "is-numeric": "0.0.5",
+    "is-string": "^1.0.4",
+    "param-case": "^2.1.1",
+    "screenfull": "^5.0.0",
+    "simple-color-picker": "^1.0.5",
+    "tinycolor2": "^1.4.1",
+    "uuid": "^3.4.0",
+    "wolfy87-eventemitter": "^5.2.2"
+  }
+}

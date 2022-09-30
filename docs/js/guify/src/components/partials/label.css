@@ -1,0 +1,18 @@
+@import "../variables.css";
+
+.guify-component-label {
+    left: 0;
+    width: calc(var(--size-label-width) - 2%);
+    display: inline-block;
+    margin-right: 2%;
+    vertical-align: top;
+    min-height: var(--size-component-height);
+    line-height: var(--size-component-height);
+
+    color: var(--color-text-primary);
+}
+
+/* Disabled styles */
+.disabled .guify-component-label {
+    color: var(--color-text-disabled);
+}
