@@ -3,6 +3,9 @@ let canvas;
 let lineWidthSlider;
 let lineColourPicker;
 
+let arrayOfPositions = []; // [] indicates an array, see https://github.com/processing/p5.js/wiki/JavaScript-basics#data-type-array (-;
+let maxNumberOfPositions = 100;
+
 function windowResized() {
   let canvasDiv = document.getElementById("drawing-area");
   //lots of strangeness with offsetWidth vs. client width
@@ -47,4 +50,34 @@ function draw() {
   stroke(lineColourPicker.color());
   noFill();
   circle(mouseX, mouseY, 42);
+
+  while (arrayOfPositions.length > maxNumberOfPositions) {
+    //get rid of the first element in the array
+    let oldestPositionVectorFromArray = arrayOfPositions.shift();
+  }
+
+  //comment out this line for a continuously updating line
+  // if (mouseX != pmouseX && mouseY != pmouseY) {
+  //   //make a new vector to add to the array
+  let newestPositionVectorForArray = createVector(mouseX, mouseY);
+
+  //push the new position vector onto the array
+  arrayOfPositions.push(newestPositionVectorForArray);
+  // }
+
+  if (arrayOfPositions.length > 2) {
+    for (let i = 0; i < arrayOfPositions.length - 1; i++) {
+      //why am I doing -1? What happens when we get to the end of the array?
+      let temporaryVector1 = arrayOfPositions[i];
+
+      let temporaryVector2 = arrayOfPositions[i + 1];
+
+      line(
+        temporaryVector1.x,
+        temporaryVector1.y,
+        temporaryVector2.x,
+        temporaryVector2.y
+      );
+    }
+  }
 }
