@@ -27,7 +27,7 @@ var lineWidth = 4;
 gui.Register({
   // A slider representing `lineWidth`, constrained between 1 and 20.
   type: "range",
-  label: "Range",
+  label: "Line Width",
   min: 1,
   max: 20,
   step: 1,
@@ -35,15 +35,18 @@ gui.Register({
   property: "lineWidth",
 });
 
+let arrayOfPositions = []; // [] indicates an array, see https://github.com/processing/p5.js/wiki/JavaScript-basics#data-type-array (-;
+let maxNumberOfPositions = 100;
+
 function windowResized() {
-  var canvasDiv = document.getElementById("drawing-area");
+  let canvasDiv = document.getElementById("drawing-area");
   //lots of strangeness with offsetWidth vs. client width
   //https://www.w3schools.com/jsref/prop_element_clientwidth.asp
   //https://www.w3schools.com/css/css_boxmodel.asp
   //https://stackoverflow.com/questions/52016682/get-divs-width-for-p5-js
   //https://github.com/processing/p5.js/issues/193
-  var canvasWidth = canvasDiv.offsetWidth;
-  var canvasHeight = canvasDiv.offsetHeight;
+  let canvasWidth = canvasDiv.offsetWidth;
+  let canvasHeight = canvasDiv.offsetHeight;
 
   //https://p5js.org/reference/#/p5/resizeCanvas
   resizeCanvas(canvasWidth, canvasHeight);
@@ -54,9 +57,9 @@ function setup() {
   //https://github.com/processing/p5.js/wiki/Beyond-the-canvas
   //https://github.com/processing/p5.js/wiki/Positioning-your-canvas
 
-  var canvasDiv = document.getElementById("drawing-area");
-  var canvasWidth = canvasDiv.offsetWidth;
-  var canvasHeight = canvasDiv.offsetHeight;
+  let canvasDiv = document.getElementById("drawing-area");
+  let canvasWidth = canvasDiv.offsetWidth;
+  let canvasHeight = canvasDiv.offsetHeight;
   // var canvas = createCanvas(canvasWidth, desiredHeight);
   canvas = createCanvas(canvasWidth, canvasHeight);
   //console.log(canvas);
@@ -68,10 +71,40 @@ function setup() {
 
 // Using p5 to render
 function draw() {
-  background(0);
+  background(255);
 
   strokeWeight(lineWidth);
   stroke(rgbColour);
   noFill();
-  circle(mouseX, mouseY, 20);
+  circle(mouseX, mouseY, 42);
+
+  while (arrayOfPositions.length > maxNumberOfPositions) {
+    //get rid of the first element in the array
+    let oldestPositionVectorFromArray = arrayOfPositions.shift();
+  }
+
+  //comment out this line for a continuously updating line
+  // if (mouseX != pmouseX && mouseY != pmouseY) {
+  //   //make a new vector to add to the array
+  let newestPositionVectorForArray = createVector(mouseX, mouseY);
+
+  //push the new position vector onto the array
+  arrayOfPositions.push(newestPositionVectorForArray);
+  // }
+
+  if (arrayOfPositions.length > 2) {
+    for (let i = 0; i < arrayOfPositions.length - 1; i++) {
+      //why am I doing -1? What happens when we get to the end of the array?
+      let temporaryVector1 = arrayOfPositions[i];
+
+      let temporaryVector2 = arrayOfPositions[i + 1];
+
+      line(
+        temporaryVector1.x,
+        temporaryVector1.y,
+        temporaryVector2.x,
+        temporaryVector2.y
+      );
+    }
+  }
 }
