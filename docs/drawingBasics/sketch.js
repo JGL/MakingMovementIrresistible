@@ -6,20 +6,21 @@ var gui = new guify({
   theme: "dark", // dark, light, yorha, or theme object
   align: "right", // left, right
   width: 300,
-  barMode: "offset", // none, overlay, above, offset
+  barMode: "overlay", // none, overlay, above, offset
   panelMode: "inner",
+  panelOverflowBehavior: "overflow",
   opacity: 0.95,
   open: true,
 });
 
 // Populate the GUI
-var rgbColor = "rgb(255, 0, 0)";
+var rgbColour = "rgba(255, 0, 0)";
 gui.Register({
   type: "color",
-  label: "RGB Color",
+  label: "Stroke colour",
   format: "rgb",
   object: this,
-  property: "rgbColor",
+  property: "rgbColour",
 });
 
 var lineWidth = 4;
@@ -70,7 +71,7 @@ function draw() {
   background(0);
 
   strokeWeight(lineWidth);
-  stroke(rgbColor);
+  stroke(rgbColour);
   noFill();
   circle(mouseX, mouseY, 20);
 }
