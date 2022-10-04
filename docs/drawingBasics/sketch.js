@@ -13,6 +13,15 @@ var gui = new guify({
 });
 
 // Populate the GUI
+var rgbColor = "rgb(255, 0, 0)";
+gui.Register({
+  type: "color",
+  label: "RGB Color",
+  format: "rgb",
+  object: this,
+  property: "rgbColor",
+});
+
 var lineWidth = 4;
 gui.Register({
   // A slider representing `lineWidth`, constrained between 1 and 20.
@@ -23,15 +32,6 @@ gui.Register({
   step: 1,
   object: this,
   property: "lineWidth",
-});
-
-var rgbColor = rgb(255, 0, 0);
-gui.Register({
-  type: "color",
-  label: "RGB Color",
-  format: "rgb",
-  object: this,
-  property: "rgbColor",
 });
 
 function windowResized() {
