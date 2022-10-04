@@ -6,13 +6,16 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, zoom-factor=1.0, maximum-scale=1.0, user-scalable=no, user-zoom=no" />
     <title>Making Movement Irresistible DOM example</title>
-    <!-- this line removes any default padding and style. you might only need one of these values set. -->
+    <!-- This line removes any default padding and style. you might only need one of these values set. In addition, the lines above in the meta and style below are to stop scrolling and zooming on mobile safari, see: https://discourse.processing.org/t/disable-scrolling-on-mobile/20719/2 -->
     <style>
         body {
             padding: 0;
             margin: 0;
+            user-select: none;
+            touch-action: none;
+            -webkit-user-select: none;
         }
 
         canvas {
