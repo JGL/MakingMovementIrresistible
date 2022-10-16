@@ -29,6 +29,17 @@ gui.Register({
   property: "strokeColour",
 });
 
+var strokeAlpha = 128;
+gui.Register({
+  type: "range",
+  label: "Stroke Alpha",
+  min: 0,
+  max: 255,
+  step: 1,
+  object: this,
+  property: "strokeAlpha",
+});
+
 var backgroundColour = "rgb(0, 0, 0)";
 gui.Register({
   type: "color",
@@ -80,6 +91,14 @@ gui.Register({
   step: 1,
   object: this,
   property: "bpm",
+});
+
+var debugDraw = false;
+gui.Register({
+  type: "checkbox",
+  label: "Debug draw?",
+  object: this,
+  property: "debugDraw",
 });
 
 function windowResized() {
@@ -143,16 +162,47 @@ function draw() {
   }
 
   // Resize normals
+  var doubleLineWidth = lineWidth * 2.0;
+  var normalisedBPM = bpm / 60.0;
+  //hacky way of just getting the value after the decimal point
+  var normalisedMillis = millis() / 1000.0;
+  var normalisedMillisOnlyAfterDecimalPoint =
+    normalisedMillis - Math.floor(normalisedMillis);
+
   for (var i = 0; i < normals.length; i++) {
-    //normals[i].normalize().mult(70 * noise(i * 0.04 + frameCount * 0.02));
-    normals[i].normalize().mult(lineWidth * 2.0);
+    if (doPulse) {
+      // following line is from original demo from hamoid
+      // normals[i]
+      //   .normalize()
+      //   .mult(lineWidth * 2.0 * noise(i * 0.04 + frameCount * 0.02));
+      // trying to do an even pulse with sine
+      //normals[i].normalize().mult(lineWidth * 2.0 + sin(i) * lineWidth);
+      // even pulse with bpm control
+      normals[i]
+        .normalize()
+        .mult(
+          doubleLineWidth +
+            doubleLineWidth *
+              abs(
+                sin(normalisedMillisOnlyAfterDecimalPoint * normalisedBPM * PI)
+              )
+        );
+    } else {
+      // following line just draws a constant linewidth based on gui value
+      normals[i].normalize().mult(doubleLineWidth);
+    }
   }
 
   if (points.length > 2) {
-    // draw calculated thick line
+    // draw calculated thick line, with a bit of alpha
     noStroke();
-    alphaDColour = color(strokeColour);
-    alphaDColour.setAlpha(128);
+
+    var alphaDColour = color(strokeColour);
+    if (debugDraw) {
+      alphaDColour.setAlpha(128);
+    } else {
+      alphaDColour.setAlpha(strokeAlpha);
+    }
     fill(alphaDColour);
 
     beginShape(QUAD_STRIP);
@@ -164,21 +214,23 @@ function draw() {
     }
     endShape();
 
-    // draw the original line
-    stroke(strokeColour);
-    noFill();
-    beginShape();
-    for (const p of points) {
-      vertex(p.x, p.y);
-    }
-    endShape();
+    if (debugDraw) {
+      // draw the original line
+      stroke(strokeColour);
+      noFill();
+      beginShape();
+      for (const p of points) {
+        vertex(p.x, p.y);
+      }
+      endShape();
 
-    // draw line vertices
-    stroke(strokeColour);
-    strokeWeight(2);
-    fill(255);
-    for (const p of points) {
-      ellipse(p.x, p.y, 6, 6);
+      // draw line vertices
+      stroke(strokeColour);
+      strokeWeight(2);
+      fill(255);
+      for (const p of points) {
+        ellipse(p.x, p.y, 6, 6);
+      }
     }
   }
 }
