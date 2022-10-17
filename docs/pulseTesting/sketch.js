@@ -133,6 +133,9 @@ function setup() {
   aPulsingLineAlongLine30 = new PulsingLineAlongLineWithSetBPM(300, 30);
   aPulsingLineAlongLine60 = new PulsingLineAlongLineWithSetBPM(400, 60);
   aPulsingLineAlongLine120 = new PulsingLineAlongLineWithSetBPM(500, 120);
+
+  textSize(12);
+  textAlign(LEFT, TOP);
 }
 
 // Using p5 to render
@@ -150,6 +153,12 @@ function draw() {
   aPulsingLineAlongLine30.draw();
   aPulsingLineAlongLine60.draw();
   aPulsingLineAlongLine120.draw();
+
+  text("<- Pulsing line no variation along length, interactive BPM", 885, 100);
+  text("<- Pulsing line variation along length, interactive BPM", 885, 200);
+  text("<- Pulsing line with variation along length at 30 BPM", 885, 300);
+  text("<- Pulsing line with variation along length at 60 BPM", 885, 400);
+  text("<- Pulsing line with variation along length at 120 BPM", 885, 500);
 }
 
 class PulsingLine {
