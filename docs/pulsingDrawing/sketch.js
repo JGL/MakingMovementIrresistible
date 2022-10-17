@@ -163,11 +163,11 @@ function draw() {
 
   // Resize normals
   var doubleLineWidth = lineWidth * 2.0;
-  var normalisedBPM = bpm / 60.0;
+  var beatsPerSecond = bpm / 60.0;
   //hacky way of just getting the value after the decimal point
-  var normalisedMillis = millis() / 1000.0;
-  var normalisedMillisOnlyAfterDecimalPoint =
-    normalisedMillis - Math.floor(normalisedMillis);
+  var seconds = millis() / 1000.0;
+  // var normalisedMillisOnlyAfterDecimalPoint =
+  //   normalisedMillis - Math.floor(normalisedMillis);
 
   for (var i = 0; i < normals.length; i++) {
     if (doPulse) {
@@ -176,16 +176,13 @@ function draw() {
       //   .normalize()
       //   .mult(lineWidth * 2.0 * noise(i * 0.04 + frameCount * 0.02));
       // trying to do an even pulse with sine
-      //normals[i].normalize().mult(lineWidth * 2.0 + sin(i) * lineWidth);
+      // normals[i].normalize().mult(lineWidth * 2.0 + sin(i) * lineWidth);
       // even pulse with bpm control
       normals[i]
         .normalize()
         .mult(
           doubleLineWidth +
-            doubleLineWidth *
-              abs(
-                sin(normalisedMillisOnlyAfterDecimalPoint * normalisedBPM * PI)
-              )
+            doubleLineWidth * abs(sin(seconds * PI * beatsPerSecond))
         );
     } else {
       // following line just draws a constant linewidth based on gui value
