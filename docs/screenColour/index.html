@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="">
+
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, zoom-factor=1.0, maximum-scale=1.0, user-scalable=no, user-zoom=no" />
+    <title>Making Movement Irresistible: Screen Colour</title>
+    <!-- This line removes any default padding and style. you might only need one of these values set. In addition, the lines above in the meta and style below are to stop scrolling and zooming on mobile safari, see: https://discourse.processing.org/t/disable-scrolling-on-mobile/20719/2 -->
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+            user-select: none;
+            touch-action: none;
+            -webkit-user-select: none;
+        }
+
+        canvas {
+            vertical-align: top;
+        }
+
+    </style>
+    <!-- Inserts `guify` into the global namespace, this must be done after the body exists, as the developer (https://jons.website/projects/guify/) says:
+    Guify works by creating an HTML element (<div class="guify-container">) and making it the child of some element of your choice; you can specify this with the `root` key in the GUI constructor. If you don't specify a value for `root`, it defaults to `document.body`. Because your script loads it in the document `head`, I don't think the body exists yet as far as JS knows, so it's assigning a null value. You can fix this by loading the script that creates the GUI later in your document, perhaps at the end of `body` - or you can just add `defer` to do that for you, as in: -->
+    <script defer type="text/javascript" src='../js/guify/lib/guify.js'></script>
+    <script defer type="text/javascript" src="../js/p5/p5.js"></script>
+    <script defer type="text/javascript" src="sketch.js"></script>
+</head>
+
+<!-- <body style="background-image: linear-gradient(red, yellow);"> -->
+
+<body>
+    <div id="drawing-area" style="width:100vw; height: 100vh;"></div>
+</body>
+
+</html>
