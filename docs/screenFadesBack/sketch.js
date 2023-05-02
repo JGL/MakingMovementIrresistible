@@ -116,6 +116,7 @@ function setup() {
 	noStroke();
 	//colorMode(RGB, 255, 255, 255, 255);
 	//colorMode(HSB, 360, 100, 100, 1);
+	pixelDensity(1);
 }
 
 // Using p5 to render
@@ -135,6 +136,9 @@ function fadeUpBackgroundViaLerp() {
 	let d = pixelDensity();
 	//setting up some default values for efficiency
 	let targetColour = color(paintColour);
+	let redTarget = red(targetColour);
+	let greenTarget = green(targetColour);
+	let blueTarget = blue(targetColour);
 	let currentColour = paintColour;
 	let hueComponentOfCurrentPixel = 0;
 	let saturationComponentOfCurrentPixel = 0;
@@ -157,12 +161,21 @@ function fadeUpBackgroundViaLerp() {
 						pixels[index + 3]
 					);
 
-					let newColor = lerpColor(currentColour, targetColour, lerpAmount);
+					if (
+						pixels[index] == redTarget &&
+						pixels[index + 1] == greenTarget &&
+						pixels[index + 2] == blueTarget
+					) {
+						//do nothing, we are already there
+					} else {
+						//this is bad because we lerp forever, never quite getting there...
+						let newColor = lerpColor(currentColour, targetColour, lerpAmount);
 
-					pixels[index] = red(newColor);
-					pixels[index + 1] = green(newColor);
-					pixels[index + 2] = blue(newColor);
-					pixels[index + 3] = alpha(newColor);
+						pixels[index] = red(newColor);
+						pixels[index + 1] = green(newColor);
+						pixels[index + 2] = blue(newColor);
+						pixels[index + 3] = alpha(newColor);
+					}
 				}
 			}
 		}
